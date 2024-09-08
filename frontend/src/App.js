@@ -2,13 +2,13 @@ import './App.css';
 import React, {useState} from "react";
 import axios from "axios";
 import FileUploader from "./components/utils/FileUploader";
+import ValidationReport from "./components/reports/ValidationReport";
 
 function App() {
   const [rdfData, setRdfData] = useState("");
   const [shapeRdfData, setShapeRdfData] = useState("");
   const [validationReport, setValidationReport] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // Add more state variables as needed
 
   const handleDataChange = (newData) => {
     setRdfData(newData);
@@ -18,25 +18,8 @@ function App() {
     setShapeRdfData(newData);
   };
 
-  // const validateRDF = async () => {
-  //   await validateData();
-  //   return;
-  //   console.log("Validating...");
-  //   console.log("RDF data:", rdfData);
-  //   console.log("=====================================");
-  //   console.log("Shapes data:", shapeRdfData);
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await axios.post("http://localhost:3000/validate", {rdfData});
-  //     setValidationReport(response.data);
-  //   } catch (error) {
-  //     console.error("Validation failed:", error);
-  //     setValidationReport("An error occurred during validation.");
-  //   }
-  //   setIsLoading(false);
-  // };
-
   const validateData = async () => {
+    setIsLoading(true);
     const maxRetries = 5;
     let attempts = 0;
     let success = false;
@@ -56,7 +39,6 @@ function App() {
 
         if (response.ok) {
           const result = await response.json();
-          console.log(result);
           setValidationReport(result.stdout);
           success = true;
         } else {
@@ -68,7 +50,7 @@ function App() {
         await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 2 seconds before retrying
       }
     }
-
+    setIsLoading(false);
     if (!success) {
       console.error('Failed to connect to backend after multiple attempts');
     }
@@ -96,11 +78,15 @@ function App() {
         </button>
 
         {validationReport && (
+            <ValidationReport reportData={validationReport} />
+        )}
+
+        {/*{validationReport && (
             <div className="validation-report">
               <h2>Validation Report</h2>
               <pre>{validationReport}</pre>
             </div>
-        )}
+        )}*/}
       </div>
   );
 }

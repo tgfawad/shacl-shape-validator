@@ -1,0 +1,53 @@
+.result-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.result-title {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.result-details {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.result-details p {
+    margin: 8px 0;
+}
+
+.severity {
+    font-weight: bold;
+}
+
+.severity.violation {
+    color: #d32f2f;
+}
+
+.severity.warning {
+    color: #f57c00;
+}
+
+.severity.info {
+    color: #1976d2;
+}
+
+.source-shape {
+    margin-top: 8px;
+    padding-left: 16px;
+    border-left: 2px solid #ddd;
+}
+
+.source-shape ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.source-shape li {
+    margin: 4px 0;
+}
