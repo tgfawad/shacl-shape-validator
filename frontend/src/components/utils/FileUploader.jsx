@@ -62,7 +62,7 @@ const FileUploader = ({ id, onDataChange, acceptedFileTypes = '.ttl,.rdf,.owl' }
                     extensions={[StreamLanguage.define(turtle)]}
                     onChange={handleDirectInput}
                     className="code-editor"
-                    placeholder={"Drop file here or paste RDF data or write your RDF data here"}
+                    placeholder={"Or Drop file here or paste RDF data or write your RDF data here"}
                 />
             </div>
         </div>
