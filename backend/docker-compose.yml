@@ -1,0 +1,9 @@
+services:
+  pyshacl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/data
+    ports:
+      - "5000:5000"  # Expose port 5000

@@ -1,0 +1,50 @@
+@prefix ex: <http://example.org/> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Alice's Data
+ex:Alice a schema:Person ;
+    schema:name "Alice Johnson" ;
+    schema:email "alice.johnson@example.org" ;
+    schema:telephone "+12345678901" ;
+    schema:birthDate "1990-05-14"^^xsd:date ;
+    schema:gender "Female" ;
+    schema:height "1.68"^^xsd:decimal ;
+    schema:weight "60.5"^^xsd:decimal ;
+    schema:hobby "Reading" ;
+    schema:address [
+        a schema:PostalAddress ;
+        schema:streetAddress "123 Elm Street" ;
+        schema:addressLocality "Wonderland" ;
+        schema:postalCode "45678"
+    ] ;
+    ex:favoriteTacoOrder [ a ex:FrenchTacoOrder ;
+        ex:size "Tacos XL" ;
+        ex:meat "Escalope de poulet" ;
+        ex:garnitures "Frites" ;
+        ex:sauce "Fromagère"
+    ] .
+
+# Bob's Data with Mistakes
+ex:Bob a schema:Person ;
+    schema:name "Bob Smith" ;
+    # Missing mandatory email property
+    schema:telephone "1234567890" ;  # Incorrect format (missing '+' and not enough digits)
+    schema:birthDate "14-06-1985" ;  # Incorrect format (should be "1985-06-14"^^xsd:date)
+    schema:gender "Male" ;
+    schema:height "1.80"^^xsd:decimal ;
+    schema:weight "75.0"^^xsd:decimal ;
+    schema:hobby "Cooking" ;
+    schema:address [
+        a schema:PostalAddress ;
+        schema:streetAddress "456 Maple Avenue" ;
+        schema:addressLocality "Mapleton" ;
+        schema:postalCode "98765"
+    ] ;
+    ex:favoriteTacoOrder [ a ex:FrenchTacoOrder ;
+        ex:size "Tacos GIGA" ;
+        ex:meat "Kebab" ;
+        ex:garnitures "Salade", "Frites" ;
+        ex:sauce "Barbecue"
+    ] .

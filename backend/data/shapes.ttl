@@ -1,0 +1,163 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ex: <http://example.org/> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Shape for schema:Person
+ex:PersonShape a sh:NodeShape ;
+    sh:targetClass schema:Person ;
+    skos:label "Person Shape" ;
+    skos:definition "Shape defining constraints for a Person instance, based on schema.org vocabulary." ;
+
+    # Property constraints
+    sh:property [
+        sh:path schema:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        skos:label "Name" ;
+        skos:definition "The name of the person. Must be a string and is mandatory." ;
+    ] ;
+    sh:property [
+        sh:path schema:email ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ; 
+        sh:pattern "^\\S+@\\S+\\.\\S+$" ;  
+        skos:label "Email" ;
+        skos:definition "The email address of the person. Must be a valid email format and is mandatory." ;
+    ] ;
+    sh:property [
+        sh:path schema:telephone ;
+        sh:datatype xsd:string ;
+        sh:pattern "^\\+\\d{9,15}$" ;  
+        skos:label "Telephone" ;
+        skos:definition "The telephone number of the person in international format." ;
+    ] ;
+    sh:property [
+        sh:path schema:birthDate ;
+        sh:datatype xsd:date ;
+        skos:label "Birth Date" ;
+        skos:definition "The birth date of the person in ISO 8601 format (YYYY-MM-DD)." ;
+    ] ;
+    sh:property [
+        sh:path schema:address ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:class schema:PostalAddress ;
+        skos:label "Address" ;
+        skos:definition "The postal address of the person. Must be a blank node or IRI referring to a PostalAddress." ;
+    ] ;
+    sh:property [
+        sh:path schema:gender ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        skos:label "Gender" ;
+        skos:definition "The gender of the person. Must be a string and is mandatory." ;
+    ] ;
+    sh:property [
+        sh:path schema:height ;
+        sh:datatype xsd:decimal ;
+        skos:label "Height" ;
+        skos:definition "The height of the person in meters." ;
+    ] ;
+    sh:property [
+        sh:path schema:weight ;
+        sh:datatype xsd:decimal ;
+        skos:label "Weight" ;
+        skos:definition "The weight of the person in kilograms." ;
+    ] ;
+    sh:property [
+        sh:path schema:hobby ;
+        sh:datatype xsd:string ;
+        sh:in ("Cycling" "Cooking" "Reading" "Swimming") ;
+        skos:label "Hobby" ;
+        skos:definition "The hobby of the person. Must be one of the predefined values." ;
+    ] ;
+    sh:property [
+        sh:path ex:favoriteTacoOrder ;
+        sh:nodeKind sh:BlankNode ;
+        sh:class ex:FrenchTacoOrder ;
+        skos:label "Favorite Taco Order" ;
+        skos:definition "The favorite taco order of the person, including size, meat, garnitures, and sauces." ;
+    ] .
+
+# Shape for schema:PostalAddress
+ex:PostalAddressShape a sh:NodeShape ;
+    sh:targetClass schema:PostalAddress ;
+    skos:label "Postal Address Shape" ;
+    skos:definition "Shape defining constraints for a Postal Address instance, based on schema.org vocabulary." ;
+    
+    # Property constraints
+    sh:property [
+        sh:path schema:streetAddress ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        skos:label "Street Address" ;
+        skos:definition "The street address of the postal address. Must be a string and is mandatory." ;
+    ] ;
+    sh:property [
+        sh:path schema:addressLocality ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        skos:label "Address Locality" ;
+        skos:definition "The locality (city or town) of the postal address. Must be a string and is mandatory." ;
+    ] ;
+    sh:property [
+        sh:path schema:postalCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        skos:label "Postal Code" ;
+        skos:definition "The postal code of the postal address. Must be a string and is mandatory." ;
+    ] ;
+    .
+
+# Shape for Taco Order
+ex:FrenchTacoOrder a rdfs:Class, sh:NodeShape ;
+    skos:label "Taco Order Shape" ;
+    skos:definition "Shape defining constraints for a taco order, specifying size, meat, garnitures, and sauces." ;
+
+    # Size Constraint
+    sh:property [
+        sh:path ex:size ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:in ("Tacos L" "Tacos L Mixte" "Tacos XL" "Tacos XXL" "Tacos GIGA") ;
+        sh:maxCount 1 ;
+        skos:label "Taco Size" ;
+        skos:definition "The size of the taco. Must be one of the predefined values and is mandatory." ;
+    ] ;
+
+    # Meat Choices Constraint
+    sh:property [
+        sh:path ex:meat ;
+        sh:datatype xsd:string ;
+        sh:in ("Viande hâchée (boeuf)" "Escalope de poulet" "Cordon bleu (poulet)" 
+               "Merguez (boeuf)" "Nuggets (poulet)" "Kebab" 
+               "Soudjouk (saucisson boeuf)" "Végétarien (falafel)") ;
+        sh:minCount 1 ;
+        skos:label "Meat Choices" ;
+        skos:definition "The meat choices for the taco. Must be one or more of the predefined values." ;
+    ] ;
+
+    # Garnitures Constraint
+    sh:property [
+        sh:path ex:garnitures ;
+        sh:datatype xsd:string ;
+        sh:in ("Frites" "Cheddar" "Gruyère" "Salade" "Tomates" "Oignons" 
+               "Carottes" "Cornichons") ;
+        sh:minCount 1 ;
+        skos:label "Garnitures" ;
+        skos:definition "The garnitures (toppings) for the taco. Must be one or more of the predefined values." ;
+    ] ;
+
+    # Sauces Constraint
+    sh:property [
+        sh:path ex:sauce ;
+        sh:datatype xsd:string ;
+        sh:in ("Fromagère" "Ketchup" "Mayonnaise" "Cocktail" "Blanche" 
+               "Barbecue" "Américaine" "Biggy Burger" "Tartare" 
+               "Curry" "Cheezy") ;
+        sh:minCount 1 ;
+        skos:label "Sauces" ;
+        skos:definition "The sauces for the taco. Must be one or more of the predefined values." ;
+    ] .
