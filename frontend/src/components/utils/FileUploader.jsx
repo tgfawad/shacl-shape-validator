@@ -5,6 +5,14 @@ import { StreamLanguage } from '@codemirror/language';
 import { turtle } from '@codemirror/legacy-modes/mode/turtle';
 import './FileUploader.css';
 
+/**
+ * Component for uploading RDF files or directly inputting RDF data.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.id - The unique identifier for the file uploader.
+ * @param {function} props.onDataChange - Callback function to handle changes in the RDF data.
+ * @param {string} [props.acceptedFileTypes='.ttl,.rdf,.owl'] - The accepted file types for upload.
+ */
 const FileUploader = ({ id, onDataChange, acceptedFileTypes = '.ttl,.rdf,.owl' }) => {
     const [rdfData, setRdfData] = useState("");
     const [fileName, setFileName] = useState(null);

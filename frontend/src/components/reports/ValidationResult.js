@@ -1,6 +1,12 @@
 import React from 'react';
 import './ValidationResult.css';
 
+/**
+ * Component to display individual SHACL validation results.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.resultData - The data for a single validation result.
+ */
 const ValidationResult = ({ resultData }) => {
     return (
         <div className="result-card">

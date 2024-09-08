@@ -4,6 +4,10 @@ import FileUploader from "./components/utils/FileUploader";
 import ValidationReport from "./components/reports/ValidationReport";
 import {validateData} from "./network/apiCalls";
 
+/**
+ * Main component for the SHACL Validator application.
+ * Handles the state and rendering of the file uploaders and validation report.
+ */
 function App() {
     const [rdfData, setRdfData] = useState("");
     const [shapeRdfData, setShapeRdfData] = useState("");

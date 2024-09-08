@@ -1,3 +1,11 @@
+/**
+ * Validates RDF data against SHACL shapes data by making an API call to the backend.
+ *
+ * @param {string} shapeRdfData - The SHACL shapes data.
+ * @param {string} rdfData - The RDF data to be validated.
+ * @param {function} setValidationReport - Function to update the validation report state.
+ * @param {function} setIsLoading - Function to update the loading state.
+ */
 export const validateData = async (shapeRdfData, rdfData, setValidationReport, setIsLoading) => {
     setIsLoading(true);
     const maxRetries = 5;

@@ -12,7 +12,12 @@ def index():
 
 @app.route('/validate', methods=['POST'])
 def validate():
-    # Get the data from the request that is coming from the frontend or Rest call
+    """
+    Validate route to perform SHACL validation on RDF data.
+    Expects a JSON payload with 'shapes_data' and 'data' fields containing RDF shape data and RDF graph data respectively.
+    Returns:
+        Response: A JSON response containing the stdout, stderr, and return code from the pyshacl validation command.
+    """
     shapes_data = request.json.get('shapes_data')
     graph_data = request.json.get('data')
 

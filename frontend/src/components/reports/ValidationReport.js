@@ -3,6 +3,14 @@ import ValidationResult from './ValidationResult';
 import { Parser } from 'n3';
 import './ValidationReport.css';
 
+/**
+ * Component for uploading RDF files or directly inputting RDF data.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.id - The unique identifier for the file uploader.
+ * @param {function} props.onDataChange - Callback function to handle changes in the RDF data.
+ * @param {string} [props.acceptedFileTypes='.ttl,.rdf,.owl'] - The accepted file types for upload.
+ */
 const ValidationReport = ({ reportData }) => {
     const [report, setReport] = useState(null);
 
@@ -10,6 +18,7 @@ const ValidationReport = ({ reportData }) => {
         const parser = new Parser();
         const quads = [];
 
+        // Parse the report data and extract the validation results
         parser.parse(reportData, (error, quad, prefixes) => {
             if (quad) {
                 quads.push(quad);
