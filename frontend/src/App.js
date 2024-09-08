@@ -1,6 +1,5 @@
 import './App.css';
 import React, {useState} from "react";
-import axios from "axios";
 import FileUploader from "./components/utils/FileUploader";
 import ValidationReport from "./components/reports/ValidationReport";
 
@@ -59,26 +58,29 @@ function App() {
   return (
       <div className="shacl-validator">
         <h1>SHACL Validator</h1>
-        <p> <b> Content to validate </b></p>
+        <p><b> Content to validate </b></p>
         <FileUploader
             id="rdf-data"
             onDataChange={handleDataChange}
             acceptedFileTypes=".ttl,.rdf,.owl"
         />
-        <hr />
-        <p> <b> Shapes data to validate against </b></p>
+        <p><b> Shapes data to validate against </b></p>
         <FileUploader
             id="shape-data"
             onDataChange={handleShapeDataChange}
             acceptedFileTypes=".ttl,.rdf,.owl"
         />
 
-        <button onClick={validateData} disabled={!rdfData || isLoading}>
+        <button
+            className="validate-button"
+            onClick={validateData}
+            disabled={!rdfData || !shapeRdfData || isLoading}
+        >
           {isLoading ? "Validating..." : "Validate RDF"}
         </button>
 
         {validationReport && (
-            <ValidationReport reportData={validationReport} />
+            <ValidationReport reportData={validationReport}/>
         )}
 
         {/*{validationReport && (

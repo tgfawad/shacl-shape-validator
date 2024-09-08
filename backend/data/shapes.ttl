@@ -1,163 +1,50 @@
-@prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix ex: <http://example.org/> .
 @prefix schema: <http://schema.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-# Shape for schema:Person
-ex:PersonShape a sh:NodeShape ;
-    sh:targetClass schema:Person ;
-    skos:label "Person Shape" ;
-    skos:definition "Shape defining constraints for a Person instance, based on schema.org vocabulary." ;
-
-    # Property constraints
-    sh:property [
-        sh:path schema:name ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        skos:label "Name" ;
-        skos:definition "The name of the person. Must be a string and is mandatory." ;
+# Alice's Data
+ex:Alice a schema:Person ;
+    schema:name "Alice Johnson" ;
+    schema:email "alice.johnson@example.org" ;
+    schema:telephone "+12345678901" ;
+    schema:birthDate "1990-05-14"^^xsd:date ;
+    schema:gender "Female" ;
+    schema:height "1.68"^^xsd:decimal ;
+    schema:weight "60.5"^^xsd:decimal ;
+    schema:hobby "Reading" ;
+    schema:address [
+        a schema:PostalAddress ;
+        schema:streetAddress "123 Elm Street" ;
+        schema:addressLocality "Wonderland" ;
+        schema:postalCode "45678"
     ] ;
-    sh:property [
-        sh:path schema:email ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ; 
-        sh:pattern "^\\S+@\\S+\\.\\S+$" ;  
-        skos:label "Email" ;
-        skos:definition "The email address of the person. Must be a valid email format and is mandatory." ;
-    ] ;
-    sh:property [
-        sh:path schema:telephone ;
-        sh:datatype xsd:string ;
-        sh:pattern "^\\+\\d{9,15}$" ;  
-        skos:label "Telephone" ;
-        skos:definition "The telephone number of the person in international format." ;
-    ] ;
-    sh:property [
-        sh:path schema:birthDate ;
-        sh:datatype xsd:date ;
-        skos:label "Birth Date" ;
-        skos:definition "The birth date of the person in ISO 8601 format (YYYY-MM-DD)." ;
-    ] ;
-    sh:property [
-        sh:path schema:address ;
-        sh:nodeKind sh:BlankNodeOrIRI ;
-        sh:class schema:PostalAddress ;
-        skos:label "Address" ;
-        skos:definition "The postal address of the person. Must be a blank node or IRI referring to a PostalAddress." ;
-    ] ;
-    sh:property [
-        sh:path schema:gender ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        skos:label "Gender" ;
-        skos:definition "The gender of the person. Must be a string and is mandatory." ;
-    ] ;
-    sh:property [
-        sh:path schema:height ;
-        sh:datatype xsd:decimal ;
-        skos:label "Height" ;
-        skos:definition "The height of the person in meters." ;
-    ] ;
-    sh:property [
-        sh:path schema:weight ;
-        sh:datatype xsd:decimal ;
-        skos:label "Weight" ;
-        skos:definition "The weight of the person in kilograms." ;
-    ] ;
-    sh:property [
-        sh:path schema:hobby ;
-        sh:datatype xsd:string ;
-        sh:in ("Cycling" "Cooking" "Reading" "Swimming") ;
-        skos:label "Hobby" ;
-        skos:definition "The hobby of the person. Must be one of the predefined values." ;
-    ] ;
-    sh:property [
-        sh:path ex:favoriteTacoOrder ;
-        sh:nodeKind sh:BlankNode ;
-        sh:class ex:MexicanTacoOrder ;
-        skos:label "Favorite Taco Order" ;
-        skos:definition "The favorite taco order of the person, including size, meat, garnitures, and sauces." ;
+    ex:favoriteTacoOrder [ a ex:FrenchTacoOrder ;
+        ex:size "Tacos XL" ;
+        ex:meat "Escalope de poulet" ;
+        ex:garnitures "Frites" ;
+        ex:sauce "Fromagère"
     ] .
 
-# Shape for schema:PostalAddress
-ex:PostalAddressShape a sh:NodeShape ;
-    sh:targetClass schema:PostalAddress ;
-    skos:label "Postal Address Shape" ;
-    skos:definition "Shape defining constraints for a Postal Address instance, based on schema.org vocabulary." ;
-    
-    # Property constraints
-    sh:property [
-        sh:path schema:streetAddress ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        skos:label "Street Address" ;
-        skos:definition "The street address of the postal address. Must be a string and is mandatory." ;
+# Bob's Data with Mistakes
+ex:Bob a schema:Person ;
+    schema:name "Bob Smith" ;
+    # Missing mandatory email property
+    schema:telephone "1234567890" ;  # Incorrect format (missing '+' and not enough digits)
+    schema:birthDate "14-06-1985" ;  # Incorrect format (should be "1985-06-14"^^xsd:date)
+    schema:gender "Male" ;
+    schema:height "1.80"^^xsd:decimal ;
+    schema:weight "75.0"^^xsd:decimal ;
+    schema:hobby "Cooking" ;
+    schema:address [
+        a schema:PostalAddress ;
+        schema:streetAddress "456 Maple Avenue" ;
+        schema:addressLocality "Mapleton" ;
+        schema:postalCode "98765"
     ] ;
-    sh:property [
-        sh:path schema:addressLocality ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        skos:label "Address Locality" ;
-        skos:definition "The locality (city or town) of the postal address. Must be a string and is mandatory." ;
-    ] ;
-    sh:property [
-        sh:path schema:postalCode ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        skos:label "Postal Code" ;
-        skos:definition "The postal code of the postal address. Must be a string and is mandatory." ;
-    ] ;
-    .
-
-# Shape for Mexican Taco Order
-ex:MexicanTacoOrder a rdfs:Class, sh:NodeShape ;
-    skos:prefLabel "Mexican Taco Order Shape" ;
-    skos:definition "Shape for validating Mexican taco order data." ;
-
-    # Size Constraint
-    sh:property [
-        sh:path ex:size ;
-        sh:datatype xsd:string ;
-        sh:minCount 1 ;
-        sh:in ("Small" "Medium" "Large" "Extra Large") ;
-        sh:maxCount 1 ;
-        skos:prefLabel "Taco Size" ;
-        skos:definition "The size of the taco." ;
-    ] ;
-
-    # Meat Choices Constraint
-    sh:property [
-        sh:path ex:meat ;
-        sh:datatype xsd:string ;
-        sh:in ("Carne Asada" "Pollo Asado" "Al Pastor" 
-               "Carnitas" "Barbacoa" "Chorizo" 
-               "Lengua" "Vegetariano (Nopales)") ;
-        sh:minCount 1 ;
-        skos:prefLabel "Meat Choice" ;
-        skos:definition "The type of meat for the taco." ;
-    ] ;
-
-    # Garnishes Constraint
-    sh:property [
-        sh:path ex:garnishes ;
-        sh:datatype xsd:string ;
-        sh:in ("Cilantro" "Onions" "Lettuce" "Pico de Gallo" 
-               "Guacamole" "Sour Cream" "Queso Fresco") ;
-        sh:minCount 1 ;
-        skos:prefLabel "Garnishes" ;
-        skos:definition "The garnishes to be added to the taco." ;
-    ] ;
-
-    # Sauces Constraint
-    sh:property [
-        sh:path ex:sauce ;
-        sh:datatype xsd:string ;
-        sh:in ("Salsa Roja" "Salsa Verde" "Salsa de Chipotle" 
-               "Salsa de Mango" "Salsa de Tomatillo" 
-               "Salsa Taquera" "Salsa Habanero") ;
-        sh:minCount 1 ;
-        skos:prefLabel "Sauce" ;
-        skos:definition "The sauce to be added to the taco." ;
+    ex:favoriteTacoOrder [ a ex:FrenchTacoOrder ;
+        ex:size "Tacos GIGA" ;
+        ex:meat "Kebab" ;
+        ex:garnitures "Salade", "Frites" ;
+        ex:sauce "Barbecue"
     ] .

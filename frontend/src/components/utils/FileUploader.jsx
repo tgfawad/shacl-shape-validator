@@ -7,6 +7,7 @@ import './FileUploader.css';
 
 const FileUploader = ({ id, onDataChange, acceptedFileTypes = '.ttl,.rdf,.owl' }) => {
     const [rdfData, setRdfData] = useState("");
+    const [fileName, setFileName] = useState(null);
 
     const handleDirectInput = useCallback((value, viewUpdate) => {
         setRdfData(value);
@@ -24,6 +25,7 @@ const FileUploader = ({ id, onDataChange, acceptedFileTypes = '.ttl,.rdf,.owl' }
             const reader = new FileReader();
             reader.onload = (e) => handleFileContent(e.target.result);
             reader.readAsText(file);
+            setFileName(file.name);
         }
     };
 
@@ -37,18 +39,30 @@ const FileUploader = ({ id, onDataChange, acceptedFileTypes = '.ttl,.rdf,.owl' }
         }
     };
 
+    const handleRemoveFile = () => {
+        setFileName(null);
+        setRdfData("");
+        onDataChange("");
+    };
+
     return (
-        <div className="input-section">
+        <div className="file-upload-container">
             <div className="file-upload">
                 <input
                     type="file"
                     id={`file-upload-${id}`}
                     onChange={handleFileUpload}
                     accept={acceptedFileTypes}
-                    style={{display: 'none'}}
+                    className="file-input"
                 />
-                <label htmlFor={`file-upload-${id}`} className="browse-button">
-                    Browse Files
+                <label htmlFor={`file-upload-${id}`} className="upload-label">
+                    <span className="browse-button">Browse Files</span>
+                    {fileName && (
+                        <span className="file-name">
+                            {fileName}
+                            <button onClick={handleRemoveFile} className="remove-button">Remove</button>
+                        </span>
+                    )}
                 </label>
             </div>
             <div
