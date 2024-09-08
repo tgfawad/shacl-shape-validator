@@ -1,0 +1,2 @@
+# shacl-shape-validator
+the front end provides a form to upload rdf data graph and rdf shape. the front end sends the rdf data graph and rdf shape to the backend for validation. the backend is a restful service that accepts rdf data graph and rdf shape and returns a report based on shacl validation.
