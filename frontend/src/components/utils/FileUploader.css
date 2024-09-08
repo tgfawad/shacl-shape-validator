@@ -1,0 +1,67 @@
+.input-section {
+    margin-bottom: 20px;
+}
+
+.input-section label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-section select {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.rdf-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.file-upload-button {
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.file-name {
+    margin-left: 10px;
+    font-style: italic;
+}
+
+.browse-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.browse-button:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.browse-button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transform: translateY(1px);
+}

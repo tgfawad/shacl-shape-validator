@@ -76,7 +76,7 @@ ex:PersonShape a sh:NodeShape ;
     sh:property [
         sh:path ex:favoriteTacoOrder ;
         sh:nodeKind sh:BlankNode ;
-        sh:class ex:FrenchTacoOrder ;
+        sh:class ex:MexicanTacoOrder ;
         skos:label "Favorite Taco Order" ;
         skos:definition "The favorite taco order of the person, including size, meat, garnitures, and sauces." ;
     ] .
@@ -111,53 +111,53 @@ ex:PostalAddressShape a sh:NodeShape ;
     ] ;
     .
 
-# Shape for Taco Order
-ex:FrenchTacoOrder a rdfs:Class, sh:NodeShape ;
-    skos:label "Taco Order Shape" ;
-    skos:definition "Shape defining constraints for a taco order, specifying size, meat, garnitures, and sauces." ;
+# Shape for Mexican Taco Order
+ex:MexicanTacoOrder a rdfs:Class, sh:NodeShape ;
+    skos:prefLabel "Mexican Taco Order Shape" ;
+    skos:definition "Shape for validating Mexican taco order data." ;
 
     # Size Constraint
     sh:property [
         sh:path ex:size ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
-        sh:in ("Tacos L" "Tacos L Mixte" "Tacos XL" "Tacos XXL" "Tacos GIGA") ;
+        sh:in ("Small" "Medium" "Large" "Extra Large") ;
         sh:maxCount 1 ;
-        skos:label "Taco Size" ;
-        skos:definition "The size of the taco. Must be one of the predefined values and is mandatory." ;
+        skos:prefLabel "Taco Size" ;
+        skos:definition "The size of the taco." ;
     ] ;
 
     # Meat Choices Constraint
     sh:property [
         sh:path ex:meat ;
         sh:datatype xsd:string ;
-        sh:in ("Viande hâchée (boeuf)" "Escalope de poulet" "Cordon bleu (poulet)" 
-               "Merguez (boeuf)" "Nuggets (poulet)" "Kebab" 
-               "Soudjouk (saucisson boeuf)" "Végétarien (falafel)") ;
+        sh:in ("Carne Asada" "Pollo Asado" "Al Pastor" 
+               "Carnitas" "Barbacoa" "Chorizo" 
+               "Lengua" "Vegetariano (Nopales)") ;
         sh:minCount 1 ;
-        skos:label "Meat Choices" ;
-        skos:definition "The meat choices for the taco. Must be one or more of the predefined values." ;
+        skos:prefLabel "Meat Choice" ;
+        skos:definition "The type of meat for the taco." ;
     ] ;
 
-    # Garnitures Constraint
+    # Garnishes Constraint
     sh:property [
-        sh:path ex:garnitures ;
+        sh:path ex:garnishes ;
         sh:datatype xsd:string ;
-        sh:in ("Frites" "Cheddar" "Gruyère" "Salade" "Tomates" "Oignons" 
-               "Carottes" "Cornichons") ;
+        sh:in ("Cilantro" "Onions" "Lettuce" "Pico de Gallo" 
+               "Guacamole" "Sour Cream" "Queso Fresco") ;
         sh:minCount 1 ;
-        skos:label "Garnitures" ;
-        skos:definition "The garnitures (toppings) for the taco. Must be one or more of the predefined values." ;
+        skos:prefLabel "Garnishes" ;
+        skos:definition "The garnishes to be added to the taco." ;
     ] ;
 
     # Sauces Constraint
     sh:property [
         sh:path ex:sauce ;
         sh:datatype xsd:string ;
-        sh:in ("Fromagère" "Ketchup" "Mayonnaise" "Cocktail" "Blanche" 
-               "Barbecue" "Américaine" "Biggy Burger" "Tartare" 
-               "Curry" "Cheezy") ;
+        sh:in ("Salsa Roja" "Salsa Verde" "Salsa de Chipotle" 
+               "Salsa de Mango" "Salsa de Tomatillo" 
+               "Salsa Taquera" "Salsa Habanero") ;
         sh:minCount 1 ;
-        skos:label "Sauces" ;
-        skos:definition "The sauces for the taco. Must be one or more of the predefined values." ;
+        skos:prefLabel "Sauce" ;
+        skos:definition "The sauce to be added to the taco." ;
     ] .
