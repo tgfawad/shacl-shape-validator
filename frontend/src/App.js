@@ -9,6 +9,8 @@ function App() {
   const [validationReport, setValidationReport] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const handleDataChange = (newData) => {
     setRdfData(newData);
   };
@@ -25,7 +27,7 @@ function App() {
 
     while (attempts < maxRetries && !success) {
       try {
-        const response = await fetch('http://localhost:5000/validate', {
+        const response = await fetch(`${apiUrl}/validate`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
