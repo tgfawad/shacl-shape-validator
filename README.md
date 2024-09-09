@@ -21,6 +21,8 @@ You can run the app in two ways:
    ```sh
    cd backend
    docker-compose up --build
+                               or
+   "pip install -r requirements.txt" and then "python app.py"
 2. Open your browser and go to `http://localhost:5000` to see if the backend is running.
 3. Install frontend dependencies and start the frontend:
    ```sh
