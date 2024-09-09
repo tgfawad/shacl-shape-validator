@@ -9,8 +9,7 @@
       "src": "backend/app.py",
       "use": "@vercel/python",
       "config": {
-        "includeFiles": ["backend/requirements.txt"],
-        "buildCommand": "pip install -r requirements.txt"
+        "includeFiles": ["backend/requirements.txt"]
       }
     }
   ],

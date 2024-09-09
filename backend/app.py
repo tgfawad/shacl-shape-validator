@@ -11,6 +11,10 @@ CORS(app)
 def index():
     return "Welcome, Backend service is up and running!"
 
+@app.route('/api/hello', methods=['GET'])
+def hello():
+    return jsonify({"message": "Hello, World!"})
+
 @app.route('/validate', methods=['POST'])
 def validate():
     """
